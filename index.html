@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pulse Monitoring Status</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card: #161b22;
+      --border: #30363d;
+      --green: #238636;
+      --red: #da3633;
+      --text: #c9d1d9;
+      --text-muted: #8b949e;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      padding: 24px;
+      line-height: 1.5;
+    }
+    .header {
+      max-width: 900px;
+      margin: 0 auto 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+    }
+    .site-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      max-width: 900px;
+      margin: 0 auto 24px;
+      padding: 20px;
+    }
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .badge {
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    .badge-up { background: var(--green); color: white; }
+    .badge-down { background: var(--red); color: white; }
+    .history-list {
+      display: flex;
+      gap: 4px;
+      margin: 16px 0;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+    .bar {
+      width: 12px;
+      height: 36px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+    .bar-up { background-color: var(--green); }
+    .bar-down { background-color: var(--red); }
+    .details {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+    a { color: #58a6ff; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2>⚡ Global Uptime Dashboard</h2>
+    <span id="update-time" style="font-size: 12px; color: var(--text-muted);"></span>
+  </div>
+  <div id="sites-container"></div>
+  <script>
+    fetch('history.json?nocache=' + Date.now())
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById('sites-container');
+        let latest = '';
+        for (const [url, info] of Object.entries(data)) {
+          const lastCheck = info.checks[0] || {};
+          const isUp = lastCheck.status === 'UP';
+          latest = lastCheck.timestamp || '';
+          const card = document.createElement('div');
+          card.className = 'site-card';
+          card.innerHTML = `
+            <div class="card-top">
+              <div>
+                <h3>${info.name}</h3>
+                <a href="${url}" target="_blank">${url}</a>
+              </div>
+              <span class="badge ${isUp ? 'badge-up' : 'badge-down'}">${isUp ? 'ONLINE' : 'OFFLINE'}</span>
+            </div>
+            <div class="history-list">
+              ${info.checks.map(c => `
+                <div class="bar ${c.status === 'UP' ? 'bar-up' : 'bar-down'}" title="${c.timestamp} - ${c.status}"></div>
+              `).reverse().join('')}
+            </div>
+            <div class="details">
+              Последний отчет: <a href="${lastCheck.report_link || '#'}" target="_blank">Открыть Check-Host пруф</a>
+            </div>
+          `;
+          container.appendChild(card);
+        }
+        document.getElementById('update-time').innerText = 'Обновлено: ' + latest;
+      })
+      .catch(() => {
+        document.getElementById('sites-container').innerHTML = '<p>История формируется...</p>';
+      });
+  </script>
+</body>
+</html>
