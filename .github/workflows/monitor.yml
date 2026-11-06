@@ -1,7 +1,8 @@
 name: Check Sites Every 15 Min
 on:
   schedule:
-    - cron: '*/15 * * * *'
+    # Запуск со смещением: в :07, :22, :37, :52 каждого часа
+    - cron: '7,22,37,52 * * * *'
   workflow_dispatch:
 permissions:
   contents: write
