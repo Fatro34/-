@@ -3,6 +3,18 @@
     "name": "ЦОПП Регистрация",
     "checks": [
       {
+        "timestamp": "2026-11-20 18:47:04 UTC",
+        "status": "DOWN",
+        "nodes": {
+          "de1.node.check-host.net": "DEAD",
+          "ru1.node.check-host.net": "DEAD",
+          "ru2.node.check-host.net": "DEAD",
+          "sg1.node.check-host.net": "DEAD",
+          "us1.node.check-host.net": "DEAD"
+        },
+        "report_link": "https://check-host.net/check-report/59572f5ck87c"
+      },
+      {
         "timestamp": "2026-11-20 10:25:08 UTC",
         "status": "DOWN",
         "nodes": {
@@ -650,7 +662,7 @@
         "report_link": "https://check-host.net/check-report/55cf7825k100"
       }
     ],
-    "consecutive_fails": 56,
+    "consecutive_fails": 57,
     "last_status": "DOWN"
   }
 }
