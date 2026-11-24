@@ -3,6 +3,12 @@
     "name": "ЦОПП Регистрация",
     "checks": [
       {
+        "timestamp": "2026-11-24 06:30:53 UTC",
+        "status": "DOWN",
+        "nodes": {},
+        "report_link": "https://check-host.net/check-report/5a4583f8kd18"
+      },
+      {
         "timestamp": "2026-11-23 22:44:04 UTC",
         "status": "DOWN",
         "nodes": {
@@ -794,7 +800,7 @@
         "report_link": "https://check-host.net/check-report/55cf7825k100"
       }
     ],
-    "consecutive_fails": 68,
+    "consecutive_fails": 69,
     "last_status": "DOWN"
   }
 }
