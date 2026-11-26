@@ -3,6 +3,17 @@
     "name": "ЦОПП Регистрация",
     "checks": [
       {
+        "timestamp": "2026-11-26 03:13:52 UTC",
+        "status": "UP",
+        "nodes": {
+          "de1.node.check-host.net": "OK",
+          "ru1.node.check-host.net": "OK",
+          "sg1.node.check-host.net": "OK",
+          "us1.node.check-host.net": "OK"
+        },
+        "report_link": "https://check-host.net/check-report/5ac533a6k3bd"
+      },
+      {
         "timestamp": "2026-11-25 20:42:07 UTC",
         "status": "UP",
         "nodes": {
